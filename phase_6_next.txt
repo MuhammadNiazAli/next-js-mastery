@@ -1,0 +1,244 @@
+6: Advanced Next.js Features, Performance Optimization, and Best Practices
+1. Next.js Image Optimization
+
+Next.js automatically optimizes images using the <Image> component from next/image. Yeh component image ko optimize karta hai, resize karta hai, aur format convert karta hai jise WebP ya AVIF jaise efficient formats mein. Isse performance improve hoti hai aur loading speed fast hoti hai.
+
+Why Use Next.js Image Component?
+
+Lazy Loading: Yeh component lazy-load karta hai images ko, matlab images tab load hoti hain jab user unko dekhne ke liye scroll karta hai.
+
+Responsive: Automatically images ko resize kar deta hai, device ki screen size ke hisaab se.
+
+Basic Example:
+import Image from 'next/image';
+
+const MyComponent = () => (
+  <div>
+    <Image
+      src="/images/landscape.jpg"
+      alt="Beautiful Landscape"
+      width={500}
+      height={300}
+      quality={75}  // Controls image quality (1-100)
+    />
+  </div>
+);
+
+export default MyComponent;
+
+
+Attributes:
+
+src: Image ka source (local ya external).
+
+alt: Image description (SEO aur accessibility ke liye zaroori).
+
+width & height: Image ki dimensions define karte hain.
+
+quality: Image quality ko control karta hai (default 75).
+
+2. Next.js Link Component for Navigation
+
+Next.js mein Link component ka use client-side routing ke liye hota hai, jo single-page applications (SPA) ki tarah kaam karta hai. Isse page reload nahi hota aur navigation fast hoti hai.
+
+Why Use Link Component?
+
+Client-side Navigation: Page ko bina reload ke navigate karne ke liye use hota hai.
+
+Automatic Prefetching: Next.js automatically linked pages ko pre-fetch karta hai jab woh page viewport mein aata hai, jisse navigation fast hoti hai.
+
+Basic Example:
+import Link from 'next/link';
+
+const HomePage = () => (
+  <div>
+    <h1>Welcome to My Next.js App!</h1>
+    <Link href="/about">
+      <a>Go to About Page</a>
+    </Link>
+  </div>
+);
+
+export default HomePage;
+
+
+Important:
+
+href: Target page ka URL.
+
+<a> tag: Next.js ka Link component <a> tag ko wrap karta hai.
+
+3. SEO Optimization in Next.js Using Head Component
+
+<Head> component ka use aap page ke <head> section mein meta tags, title, aur other SEO-related elements ko dynamically add karne ke liye karte ho.
+
+Why Use Head Component for SEO?
+
+Custom Titles: Har page ka apna title aur meta description set kar sakte ho, jisse SEO improve hota hai.
+
+Social Media Optimization: Open Graph aur Twitter Cards tags ko set karke social media pe links ka preview optimize kar sakte ho.
+
+Example:
+import Head from 'next/head';
+
+const HomePage = () => (
+  <div>
+    <Head>
+      <title>My Next.js App</title>
+      <meta name="description" content="This is my awesome Next.js application." />
+      <meta name="keywords" content="next.js, react, seo" />
+      <meta property="og:title" content="My Next.js App" />
+      <meta property="og:description" content="The best app built with Next.js" />
+    </Head>
+    <h1>Welcome to My Next.js App!</h1>
+  </div>
+);
+
+export default HomePage;
+
+Best Practices for SEO:
+
+Har page ka unique title aur meta description set karein.
+
+Open Graph aur Twitter Card tags ko set karein taake social media previews better ho sakein.
+
+4. Google Fonts in Next.js
+
+Next.js mein Google Fonts ka support built-in hota hai. Aap easily Google Fonts ko apne app mein integrate kar sakte ho aur Next.js automatically unhe optimize kar deta hai.
+
+Why Use Google Fonts in Next.js?
+
+Fast Font Loading: Google Fonts ko Next.js se integrate karte waqt wo fast aur efficiently load hoti hain.
+
+Automatic Optimization: Next.js automatically Google Fonts ko optimize karta hai jisse page load time improve hota hai.
+
+How to Use Google Fonts:
+
+Using next/head to Link Google Fonts:
+
+import Head from 'next/head';
+
+const HomePage = () => (
+  <div>
+    <Head>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet"
+      />
+    </Head>
+    <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>Welcome to My App</h1>
+  </div>
+);
+
+export default HomePage;
+
+
+Using next/font (Next.js 13+) for Font Optimization:
+Next.js 13 se next/font ka support hai, jo Google Fonts ko optimize karta hai aur better performance ke liye font load karta hai.
+
+Example (Using next/font):
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+});
+
+const HomePage = () => (
+  <div className={roboto.className}>
+    <h1>Welcome to My Next.js App</h1>
+  </div>
+);
+
+export default HomePage;
+
+5. File-Based Routing in Next.js
+
+Next.js mein routing file-based hoti hai, jisme pages/ folder ka structure automatically routes ko define karta hai. Aapko manually route set karne ki zaroorat nahi padti.
+
+File-based Routing:
+
+pages/index.js → / route
+
+pages/about.js → /about route
+
+Dynamic Routes:
+
+Dynamic routes banane ke liye aap file name mein brackets ka use karte hain, jaise:
+
+pages/[id].js → /123, /abc jese routes handle hoti hain.
+
+Example (Dynamic Routes):
+// pages/[id].js
+export default function DynamicPage({ id }) {
+  return <h1>Page for ID: {id}</h1>;
+}
+
+
+Dynamic parameters ko useRouter hook ke through access kar sakte hain.
+
+6. Next.js API Routes for Backend
+
+Next.js mein aap API routes define kar sakte ho jo backend functionality (data fetching, form submission, etc.) handle karte hain. Yeh API routes pages/api/ folder mein hote hain.
+
+How to Create an API Route:
+
+Create a file inside the pages/api/ folder.
+
+// pages/api/contact.js
+export default function handler(req, res) {
+  res.status(200).json({ message: 'Contact form submitted successfully' });
+}
+
+
+This will create an API route accessible at /api/contact.
+
+Example (Handling POST Requests):
+// pages/api/user.js
+export default function handler(req, res) {
+  if (req.method === 'POST') {
+    const { name, email } = req.body;
+    res.status(200).json({ message: `User ${name} created!` });
+  } else {
+    res.status(405).json({ message: 'Method Not Allowed' });
+  }
+}
+
+
+You can call this API using fetch or axios from your frontend.
+
+7. Custom Error Pages in Next.js
+
+Aap Next.js mein custom error pages create kar sakte hain, jaise 404 error pages.
+
+Custom 404 Page:
+
+404 page ko customize karne ke liye aapko pages/404.js file banani hoti hai.
+
+// pages/404.js
+export default function Custom404() {
+  return <h1>Oops! Page Not Found</h1>;
+}
+
+
+Yeh page tab show hoga jab user koi invalid route access karega.
+
+8. Deploying Next.js Application
+
+Next.js ko deploy karna kaafi easy hai, especially Vercel ya Netlify pe. Yeh platforms Next.js ke liye optimized hain.
+
+Vercel:
+
+Sign Up for Vercel.
+
+Connect your GitHub repository.
+
+Push your code to the repository, and Vercel will automatically deploy the app.
+
+Netlify:
+
+Sign Up for Netlify.
+
+Link your GitHub repository.
+
+Deploy the app with one click.

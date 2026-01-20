@@ -1,0 +1,169 @@
+1: Next.js Setup, Routing, and Data Fetching
+1. Setting Up a Next.js Project
+
+Next.js ka use karna shuru karne ke liye, sabse pehle aapko Next.js application setup karna hoga. Next.js ke saath ek new project start karne ke liye create-next-app tool ka use kiya jata hai.
+
+Setting up a Next.js Application:
+
+Install Next.js:
+
+Next.js ko install karne ke liye, aap create-next-app CLI tool ka use kar sakte hain. Yeh ek boilerplate React application setup karta hai jisme Next.js ka configuration pre-configured hota hai.
+
+Step 1: Run the following command in your terminal:
+
+npx create-next-app@latest my-next-app
+
+
+Isse aapka project my-next-app naam se create ho jayega.
+
+Step 2: Navigate into the project directory:
+
+cd my-next-app
+
+
+Step 3: Start the development server:
+
+npm run dev
+
+
+Step 4: Open the browser and visit http://localhost:3000
+. Aapka default Next.js application successfully running hoga!
+
+2. File-based Routing in Next.js
+
+Next.js mein file-based routing ka concept hota hai, jisme aapki pages folder ka structure hi routes define karta hai. Jaise agar aap pages/about.js file banate hain, toh wo automatically /about route ko represent karega.
+
+Creating Pages:
+
+pages/index.js → / route (Home page)
+
+pages/about.js → /about route
+
+Example:
+// pages/index.js (Home page)
+export default function Home() {
+  return <h1>Welcome to Next.js!</h1>;
+}
+
+
+Next.js mein dynamic routing bhi support hota hai. Agar aapko dynamic routes chahiye, toh aap brackets ([]) ka use karte hain.
+
+Dynamic Routes Example:
+// pages/[id].js
+export default function DynamicPage({ id }) {
+  return <h1>Page for ID: {id}</h1>;
+}
+
+// This will handle routes like /123, /abc, etc.
+
+
+Is example mein, pages/[id].js route dynamically kisi bhi id ko handle karega (e.g., /123, /abc, etc.).
+
+3. Data Fetching Methods in Next.js
+
+Next.js mein data fetching ke liye 3 primary methods hoti hain: getStaticProps, getServerSideProps, aur getInitialProps.
+
+a. getStaticProps (Static Site Generation - SSG)
+
+getStaticProps ka use static site generation (SSG) ke liye hota hai. Yeh method build time par data fetch kar ke pre-rendered pages generate karta hai.
+
+Yeh method SSR (Server-Side Rendering) se alag hota hai kyunki yeh data ko server pe request karke build time par render karta hai.
+
+Example:
+// pages/index.js
+export async function getStaticProps() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+
+  return { props: { data } };
+}
+
+export default function HomePage({ data }) {
+  return <div>{data}</div>;
+}
+
+
+getStaticProps ka use aapko build time par data ko fetch karne ke liye karna hota hai. Yeh static HTML generate karta hai jo performance aur SEO ko improve karta hai.
+
+b. getServerSideProps (Server-Side Rendering - SSR)
+
+getServerSideProps ka use server-side rendering (SSR) ke liye hota hai. Yeh method runtime par data fetch karta hai har request ke liye aur server par page ko render karke client ko bhejta hai.
+
+getServerSideProps ka use tab hota hai jab aapko page load karte waqt data ko real-time mein fetch karna ho.
+
+Example:
+// pages/index.js
+export async function getServerSideProps() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+
+  return { props: { data } };
+}
+
+export default function HomePage({ data }) {
+  return <div>{data}</div>;
+}
+
+
+getServerSideProps page ko server pe render karne ke baad client ko HTML bhejta hai. Yeh real-time data ke liye best hai, lekin SSR performance ko thoda slow kar sakta hai kyunki har request ke liye server pe render karna padta hai.
+
+c. getInitialProps (Deprecated in favor of getStaticProps and getServerSideProps)
+
+getInitialProps ek older method hai jo Next.js mein data fetching ke liye use hota tha, lekin Next.js ne ise deprecated kar diya hai aur uski jagah getStaticProps aur getServerSideProps use karna zyada preferred hai.
+
+4. Static File Serving and Assets in Next.js
+
+Next.js mein static assets (images, stylesheets, fonts, etc.) ko serve karna bahut asaan hota hai. Aapko public/ folder ke andar apne assets ko rakhna padta hai, aur us folder ka content directly accessible hota hai.
+
+Example:
+
+Folder Structure:
+
+public/
+  images/
+    logo.png
+  styles/
+    main.css
+
+
+Accessing Static Assets:
+
+Aap images ko /images/logo.png se access kar sakte hain, jaise:
+
+<img src="/images/logo.png" alt="Logo" />
+
+
+Next.js public/ folder ko static file serving ke liye automatically configure karta hai, jisme koi extra configuration ki zaroorat nahi padti.
+
+5. Automatic Code Splitting
+
+Next.js automatically code splitting ka use karta hai jisse app ka initial load time optimize hota hai. Jab aapka app bohot bada hota hai, Next.js automatically har page ke liye alag bundle create karta hai.
+
+How does Code Splitting work in Next.js?
+
+Dynamic Imports: Agar aap kisi component ko dynamically import karte hain, toh Next.js sirf us component ko load karega jab uska use ho.
+
+Example:
+
+import dynamic from 'next/dynamic';
+
+const DynamicComponent = dynamic(() => import('../components/HeavyComponent'));
+
+const Page = () => <DynamicComponent />;
+
+
+Is method se unnecessary JavaScript ko load karne se bacha ja sakta hai, aur performance ko optimize kiya jata hai.
+
+6. Deployment of Next.js Application
+
+Next.js applications ko deploy karne ke liye Vercel aur Netlify jaise platforms ka use hota hai, jo serverless deployment provide karte hain. Vercel Next.js ka official hosting platform hai, isliye yeh Next.js ke liye best deployment solution hai.
+
+Deploying on Vercel:
+
+Sign up for Vercel (if you don’t have an account).
+
+Connect your GitHub repository with Vercel.
+
+Deploy your app by clicking on the Deploy button in the Vercel dashboard.
+
+Vercel automatically Next.js ko optimize kar ke app ko deploy kar deta hai.

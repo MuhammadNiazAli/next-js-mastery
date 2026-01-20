@@ -1,0 +1,318 @@
+8: Final Next.js Concepts - Advanced Features and Best Practices
+1. Custom Document in Next.js
+
+Next.js allows you to customize the HTML document structure using the _document.js file. This is useful when you need to modify the <html>, <head>, or <body> tags globally.
+
+Why Use Custom Document?
+
+Add custom meta tags.
+
+Modify the <body> class (e.g., for dark mode or custom styles).
+
+Inject external stylesheets or fonts that are not part of your main app.
+
+Creating a Custom Document:
+
+Create _document.js in the pages folder.
+
+Extend the default document:
+
+// pages/_document.js
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default MyDocument;
+
+
+This allows you to inject global settings into your HTML document.
+
+2. Static File Serving and Public Folder
+
+Next.js has a public/ folder for serving static files such as images, icons, fonts, etc. Anything placed inside this folder is automatically served at the root of the site.
+
+Why Use the Public Folder?
+
+Simple static asset handling: Store images, fonts, and other assets here and refer to them with a simple path.
+
+Faster Load Times: Static files are served directly from the server, reducing the processing time.
+
+Example:
+
+Place your images in the public/images/ directory.
+
+Access images like this:
+
+<img src="/images/logo.png" alt="Logo" />
+
+
+Note: The public/ folder is served from the root of the app, so you can directly reference assets like /logo.png, /favicon.ico, etc.
+
+3. Next.js with TypeScript
+
+Next.js has first-class support for TypeScript. You can easily set up TypeScript in a Next.js project, which improves development with type checking, better editor support, and error detection.
+
+Setting Up TypeScript:
+
+Install TypeScript and types:
+
+npm install --save-dev typescript @types/react @types/node
+
+
+Create a tsconfig.json file:
+You don’t need to configure it manually, as Next.js will automatically generate this file for you once you run the development server.
+
+Change .js files to .tsx:
+Rename your files to .tsx for components or .ts for regular TypeScript files.
+
+Example (TypeScript Component):
+// components/Greeting.tsx
+interface GreetingProps {
+  name: string;
+}
+
+const Greeting: React.FC<GreetingProps> = ({ name }) => {
+  return <h1>Hello, {name}</h1>;
+};
+
+export default Greeting;
+
+4. Next.js and Dynamic Imports
+
+Dynamic imports allow you to load components only when needed, improving the initial load time of the application. Next.js uses React.lazy for this, but you can also use next/dynamic for more control over the loading behavior.
+
+Why Use Dynamic Imports?
+
+Code splitting: Load components on demand, which reduces the initial JavaScript bundle size.
+
+Lazy loading: Load only the necessary components when they are needed.
+
+Using next/dynamic for Dynamic Imports:
+Example:
+import dynamic from 'next/dynamic';
+
+// Dynamically load a component
+const DynamicComponent = dynamic(() => import('../components/HeavyComponent'));
+
+const Page = () => {
+  return (
+    <div>
+      <h1>Welcome to my Next.js page</h1>
+      <DynamicComponent />
+    </div>
+  );
+};
+
+export default Page;
+
+With loading Placeholder:
+
+You can also specify a loading spinner or placeholder while the component is loading.
+
+const DynamicComponent = dynamic(() => import('../components/HeavyComponent'), {
+  loading: () => <p>Loading...</p>,
+});
+
+5. Next.js with GraphQL
+
+Next.js can integrate seamlessly with GraphQL to fetch data. Using Apollo Client or any other GraphQL client, you can fetch data efficiently in a React/Next.js application.
+
+Why Use GraphQL?
+
+Single request: GraphQL lets you request exactly the data you need, making it more efficient than REST APIs.
+
+Dynamic queries: You can adjust queries based on the app’s requirements without changing the backend.
+
+Example - Using Apollo Client:
+
+Install Apollo Client:
+
+npm install @apollo/client graphql
+
+
+Configure Apollo Client:
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://graphql.example.com/',
+  cache: new InMemoryCache(),
+});
+
+const App = () => (
+  <ApolloProvider client={client}>
+    <HomePage />
+  </ApolloProvider>
+);
+
+export default App;
+
+
+Fetching Data in Pages:
+
+import { useQuery, gql } from '@apollo/client';
+
+const GET_DATA = gql`
+  query GetData {
+    posts {
+      title
+      body
+    }
+  }
+`;
+
+const HomePage = () => {
+  const { loading, error, data } = useQuery(GET_DATA);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return (
+    <div>
+      {data.posts.map((post) => (
+        <div key={post.title}>
+          <h2>{post.title}</h2>
+          <p>{post.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default HomePage;
+
+6. Error Handling and Custom Error Pages
+
+You can create custom error pages for different HTTP status codes, such as 404 or 500. This helps in giving users a better experience when they encounter errors.
+
+Custom 404 Page:
+// pages/404.js
+const Custom404 = () => {
+  return <h1>Oops! Page Not Found</h1>;
+};
+
+export default Custom404;
+
+
+This page will be shown when a user tries to access a non-existent route.
+
+Custom 500 Page (Server Errors):
+// pages/500.js
+const Custom500 = () => {
+  return <h1>Server Error</h1>;
+};
+
+export default Custom500;
+
+
+This page will be shown when there's a server error.
+
+7. Optimizing Next.js for Production
+
+When you are ready to deploy your Next.js application, you should always optimize it for production to ensure fast load times and better performance.
+
+Production Optimizations:
+
+Image Optimization: Use the next/image component for automatic image resizing and serving images in modern formats like WebP.
+
+Static Generation (SSG): Pre-render static content whenever possible using getStaticProps and getStaticPaths.
+
+Minification: Next.js automatically minifies JavaScript and CSS files in production builds.
+
+Bundle Analysis: Use next-bundle-analyzer to analyze your app’s bundle and optimize it further.
+
+Example:
+npm run build
+npm run start
+
+
+This will create an optimized production build and serve the app.
+
+8. Advanced Custom Server in Next.js
+
+While Next.js provides a built-in server for development, you can create a custom server to handle specific routing or integrate with other backend services.
+
+Example - Custom Server with Express:
+const express = require('express');
+const next = require('next');
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
+
+app.prepare().then(() => {
+  const server = express();
+
+  server.get('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(3000, (err) => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:3000');
+  });
+});
+
+
+You can deploy this on platforms that support Node.js like Heroku, AWS, or DigitalOcean.
+
+9. Next.js Analytics and Monitoring
+
+Monitoring your app’s performance and Web Vitals (like LCP, FID, and CLS) is important for understanding user experience. Next.js provides integrations for monitoring and logging.
+
+Using Google Analytics:
+
+Add the Google Analytics script to _document.js:
+
+// pages/_document.js
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'YOUR_TRACKING_ID', {
+                  page_path: window.location.pathname,
+                });
+              `,
+            }}
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default MyDocument;
+
+
+Replace YOUR_TRACKING_ID with your Google Analytics tracking ID.

@@ -1,0 +1,153 @@
+What is Next.js?
+
+Next.js ek React-based framework hai jo developers ko server-side rendered (SSR) aur static websites banane mein madad karta hai. Yeh Vercel ne banaya hai aur React library ko production-level applications ke liye enhance karta hai. React sirf client-side rendering handle karta hai, lekin Next.js ka main focus full-stack applications banane pe hota hai jisme aapko backend aur frontend ka combination milta hai.
+
+Next.js ko use karke aapko kuch advanced features milte hain jaise:
+
+Server-Side Rendering (SSR)
+
+Static Site Generation (SSG)
+
+API Routes
+
+File-based Routing
+
+Automatic Code Splitting
+
+Yeh framework React development ko simplify karta hai aur large applications ko easily scale karne mein madad karta hai.
+
+Why Use Next.js?
+
+Next.js ko use karne ke bohot sare reasons hain, jo aapko ek solid foundation denge modern web applications banane ke liye. Iske kuch main features hain:
+
+1. Server-Side Rendering (SSR)
+
+SSR ka matlab hai ki Next.js aapke components ko server pe render kar ke client ko bhejta hai. Yeh SEO (Search Engine Optimization) improve karta hai, kyunki search engines ko rendered HTML directly milta hai.
+
+Initial load time bhi fast hota hai kyunki page pehle se server se render ho ke aata hai.
+
+2. Static Site Generation (SSG)
+
+SSG ka use karke aap pages ko build time par pre-render kar sakte ho. Jaise agar aapko koi blog ya e-commerce website banaani ho jo frequently update na hoti ho, to aap pre-rendered static pages bana sakte ho.
+
+Pre-generated pages faster load hote hain aur SEO-friendly hote hain.
+
+3. File-based Routing
+
+Next.js mein aapko manual routing ki zaroorat nahi padti. Aap jo file pages/ folder mein create karte ho, wo automatically ek route ban jaati hai.
+
+Jaise, agar aap pages/about.js banate hain, to wo automatically /about route ke liye available ho jaata hai.
+
+4. Built-in CSS and Sass Support
+
+Next.js mein CSS aur Sass ka built-in support hai. Aap easily global styles ya CSS Modules ka use kar sakte ho.
+
+5. API Routes
+
+Next.js mein API routes ka feature hai jisme aap serverless functions create kar sakte ho jo backend functionality (form submissions, database queries, etc.) handle karte hain. Yeh sab aap pages/api folder mein define karte ho.
+
+Isse aapko backend server setup karne ki zaroorat nahi padti, jo full-stack application ke liye bahut convenient hota hai.
+
+6. Automatic Code Splitting
+
+Next.js automatically code ko split karta hai aur sirf uss component ko load karta hai jo required ho. Isse aapki app fast load hoti hai aur performance improve hoti hai.
+
+7. Optimized Performance
+
+Next.js mein image optimization aur automatic static optimization jaise features included hote hain jo app ki speed ko improve karte hain.
+
+8. Fullstack Capabilities
+
+Next.js aapko fullstack applications banane ki facility deta hai, jisme aap frontend React ko aur backend APIs ko ek saath integrate kar sakte ho.
+
+Key Features of Next.js
+1. Pages and Routing
+
+Next.js mein file-based routing hota hai. Aap pages folder mein jo files banate ho, wo automatically routes ban jaate hain. Jaise pages/index.js ka route / hota hai, aur pages/about.js ka route /about.
+
+Dynamic routing ka use karne ke liye aap bracket syntax ka use karte ho. Jaise pages/[id].js file automatically /123 route ko handle karegi.
+
+2. Server-Side Rendering (SSR)
+
+SSR mein aap data ko server pe fetch kar ke page ko render karte ho, aur us page ka HTML client ko bhejte ho. Isse SEO aur page load time improve hota hai.
+
+Example:
+
+// pages/index.js
+export async function getServerSideProps() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+  return { props: { data } };
+}
+
+export default function HomePage({ data }) {
+  return <div>{data}</div>;
+}
+
+3. Static Site Generation (SSG)
+
+SSG mein aap pages ko build time pe pre-render karte ho. Yeh approach fast websites banane ke liye best hai, jahan data change nahi hota ya bahut rarely change hota ho.
+
+Example:
+
+// pages/index.js
+export async function getStaticProps() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+  return { props: { data } };
+}
+
+export default function HomePage({ data }) {
+  return <div>{data}</div>;
+}
+
+4. API Routes
+
+API Routes ka use aap serverless functions banane ke liye karte ho jo backend functionality ko handle karte hain, jaise data fetch karna, form submissions, etc.
+
+Example:
+
+// pages/api/hello.js
+export default function handler(req, res) {
+  res.status(200).json({ message: 'Hello World' });
+}
+
+5. Image Optimization
+
+Next.js mein Image Optimization ka built-in feature hota hai. Is feature ki madad se aap images ko automatically optimize kar sakte ho jisse performance aur loading time improve hoti hai.
+
+Example:
+
+import Image from 'next/image';
+
+const HomePage = () => (
+  <div>
+    <Image
+      src="/images/sample.jpg"
+      alt="Sample Image"
+      width={500}
+      height={300}
+    />
+  </div>
+);
+
+6. Built-in CSS Support
+
+Next.js mein CSS ko directly import kiya ja sakta hai aur aap Sass bhi use kar sakte ho. Isme CSS Modules ka support bhi hota hai jo component-specific styles ko isolate karta hai.
+
+Example:
+
+// Import global styles
+import '../styles/global.css';
+
+7. Dynamic Imports with React.lazy()
+
+Next.js mein aap components ko dynamically lazy-load kar sakte ho, jisse application ka initial load time reduce hota hai.
+
+Example:
+
+import dynamic from 'next/dynamic';
+
+const DynamicComponent = dynamic(() => import('../components/HeavyComponent'));
+
+const HomePage = () => <DynamicComponent />;
