@@ -1,74 +1,140 @@
+<div align="center">
+
+<a href="https://nextjs.org/" target="_blank" rel="noreferrer">
+  <img src="./language/next.webp" alt="Next.js" width="120" />
+</a>
+<img src="./language/fast.png" alt="Fast Badge" width="120" />
+
 # **Next.js - Comprehensive Guide**
+
+Official Next.js Website:  
+<a href="https://nextjs.org/" target="_blank" rel="noreferrer">nextjs.org</a>
+
+</div>
+
+---
 
 ## **Introduction**
 
-Welcome to the **Next.js** project! This repository provides an in-depth understanding of **Next.js** and its key features. **Next.js** is a **React-based framework** that enables the development of high-performance, SEO-friendly, and scalable applications. It allows for **server-side rendering (SSR)**, **static site generation (SSG)**, and **client-side rendering (CSR)**, making it a versatile framework for modern web development.
+Welcome to the **Next.js** project! This repository provides an in-depth understanding of **Next.js** and its key features. **Next.js** is a **React-based framework** that enables the development of high-performance, SEO-friendly, and scalable applications. It supports **Server Components**, **SSR**, **SSG**, and **CSR**, making it a strong choice for modern web apps.
 
-In this repository, you will learn and explore the following concepts:
+In this repository, you will learn and explore:
 
-- **Server-Side Rendering (SSR)**, **Static Site Generation (SSG)**, and **Client-Side Rendering (CSR)**
-- **File-based Routing** in Next.js
-- **Image Optimization** using Next.js `Image` component
-- **Dynamic Routing and API Routes**
-- **Middleware** for handling authentication and requests
-- **SEO Optimization** with Next.js `Head` component
-- **Google Fonts Integration** and **Custom Document Setup**
-- **Deployment** strategies on platforms like Vercel, Netlify, and custom servers
-- **GraphQL** integration with **Apollo Client**
-- **Performance Optimizations** and **Web Vitals Monitoring**
-- **Error Handling and Custom Error Pages**
-- **TypeScript** integration with Next.js
+- **SSR**, **SSG**, **CSR**, and **React Server Components (RSC)**
+- **File-based Routing** (Pages Router and App Router)
+- **Image Optimization** using `next/image`
+- **Dynamic Routing** and **API Routes / Route Handlers**
+- **Middleware** for auth, redirects, and edge logic
+- **SEO** using `metadata` (App Router) and `Head` (Pages Router)
+- **Fonts** using `next/font`
+- **Deployment** on Vercel and other platforms
+- **Performance** optimizations and Core Web Vitals
+- **Error Handling** with `error.tsx`, `not-found.tsx`, and custom pages
+- **TypeScript** setup and best practices
+
+---
 
 ## **Key Features of Next.js**
 
 ### **1. Server-Side Rendering (SSR)**
-Next.js supports **SSR**, which means the pages are rendered on the server before being sent to the client. This improves **SEO** and **initial load performance**.
+Next.js supports **SSR**, where pages are rendered on the server per request. This improves **SEO** and **first load performance**.
 
-- **When to use SSR**: Ideal for dynamic content that needs to be updated with each request.
+- **When to use SSR**: For highly dynamic pages that change on each request.
+
+---
 
 ### **2. Static Site Generation (SSG)**
-With **SSG**, pages are pre-rendered at build time and served as static HTML. This results in faster load times and improved SEO.
+With **SSG**, pages are pre-rendered at build time and served as static HTML.
 
-- **When to use SSG**: Ideal for content that doesn't change often (e.g., blogs, documentation sites).
+- **When to use SSG**: For content that rarely changes (docs, blogs, marketing pages).
+
+---
 
 ### **3. Client-Side Rendering (CSR)**
-Next.js also supports **CSR**, where content is rendered in the client’s browser using JavaScript after the initial load.
+Next.js also supports **CSR**, where data loads after the page renders.
 
-- **When to use CSR**: For interactive UIs where data can be fetched dynamically after the page load.
+- **When to use CSR**: For interactive dashboards, filters, and user-driven screens.
 
-### **4. Image Optimization**
-Next.js comes with a built-in **`Image`** component that automatically optimizes images for faster loading.
+---
 
-- **Why use it?**: Optimizes images for size, resolution, and format (e.g., WebP) to improve performance.
+### **4. React Server Components (RSC)**
+With the **App Router**, components can run on the server by default, reducing client JS and improving performance.
 
-### **5. Dynamic Routing**
-With **dynamic routing**, Next.js can generate pages based on URL parameters (e.g., `/posts/[id]`).
+- **Why it matters**: Faster pages, smaller bundles, cleaner data fetching.
 
-- **When to use it**: For applications where pages are generated based on dynamic parameters like user ID, product ID, etc.
+---
 
-### **6. API Routes**
-Next.js allows you to create **API routes** inside the **`pages/api/`** folder, making it easy to implement serverless functions.
+### **5. Image Optimization**
+Next.js includes `next/image` which optimizes images automatically.
 
-- **Why use it?**: Simplifies the creation of backend functionality like form submissions, authentication, and data fetching.
+- **Why use it**: Better performance via responsive sizing, modern formats, and lazy loading.
 
-### **7. Middleware**
-Next.js provides the ability to use **middleware** for handling logic before the request reaches the page or API. Middleware can be used for tasks like **authentication**, **logging**, and **redirects**.
+---
 
-### **8. SEO Optimization**
-Next.js comes with built-in support for **SEO** optimization through the **`Head`** component, where you can define meta tags, titles, and social media tags for each page.
+### **6. Dynamic Routing**
+Create routes like `/posts/[id]` to render pages based on params.
 
-### **9. Google Fonts Integration**
-Next.js makes it easy to use Google Fonts, either via the traditional **`<link>`** method in the `<Head>` or using the new **`next/font`** package for optimization.
+- **When to use**: Products, blogs, profiles, admin panels.
 
-### **10. Performance Optimization**
-Next.js automatically optimizes your app with features like **code-splitting**, **lazy-loading**, **static site generation**, and **image optimization**.
+---
 
-### **11. TypeScript Integration**
-Next.js has built-in TypeScript support, providing a better developer experience with **type-checking**, **error detection**, and **intelliSense**.
+### **7. API Routes / Route Handlers**
+- **Pages Router**: `pages/api/*`
+- **App Router**: `app/api/*/route.ts`
+
+- **Why use it**: Lightweight backend endpoints, auth, webhooks, forms.
+
+---
+
+### **8. Middleware**
+Middleware runs before a request completes and is great for:
+
+- Auth checks
+- Redirects
+- Geo-based routing
+- Logging / headers
+
+---
+
+### **9. SEO Optimization**
+- **App Router**: `export const metadata = {}`
+- **Pages Router**: `next/head`
+
+- **Why**: Better indexing, rich previews, and clean social tags.
+
+---
+
+### **10. Fonts (Optimized)**
+Use `next/font` for optimized font loading.
+
+- **Why**: Faster loads and fewer layout shifts.
+
+---
+
+### **11. Performance Optimization**
+Built-in:
+
+- Code splitting
+- Lazy loading
+- Caching strategies
+- Streaming (App Router)
+- Prefetching
+
+---
+
+### **12. TypeScript Integration**
+Next.js supports TypeScript out of the box.
+
+- **Why**: Safer refactors, cleaner contracts, fewer runtime bugs.
 
 ---
 
 ## **How to Use This Repository**
 
 ### **1. Install Dependencies**
-
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
