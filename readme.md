@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-  <img src="./language/next.webp" alt="Next.js" width="120" />
+  <img src="./language/next1.webp" alt="Next.js" width="120" />
 </a>
 <img src="./language/fast.png" alt="Fast Badge" width="120" />
 
